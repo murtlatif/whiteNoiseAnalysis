@@ -1,0 +1,6 @@
+__pycache__
+*.pth
+data/mnistDataFiles/*
+data/classificationImages/*.npy
+.vscode
+data/trainingResults/*.npz

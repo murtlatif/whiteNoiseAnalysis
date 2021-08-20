@@ -1,0 +1,18 @@
+# QUESTIONS
+
+- Figure 1. A) Doesn't gamma = 0 mean that its entirely the noisy signal? Its interesting to see that the correlation image is not clear
+- Figure 1. Does B) cols. 1-4 show the average of the inputs?
+- Figure 1. The * noise only section, does it mean the noise pattern n that includes the signal? Isn't that just the y=0 case
+
+
+Biases from:
+    1. Environment and the data where the system is trained
+    2. System constraints (hypothesis class, model parameters)
+
+Important to explore these biases because:
+    1. Better understanding of a system
+    2. Reveals system vulnerabilities, makes more robust against pertrubations & attacks
+
+* Feeding white noise stimuli to a classifier & averaging the ones that are categorized into a class, we obtain an estimate
+of the templates it uses for classification.
+
