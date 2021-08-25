@@ -51,6 +51,7 @@ class SmallerCNN(nn.Module):
 
         input_shape = shape_to_tuple(input_shape)
 
+        print(f'Initializing Smaller CNN with configs: conv1-{conv1_layer}, conv2-{conv2_layer}')
         # ConvLayerConfig verification
         assert conv1_layer.is_valid()
         assert conv2_layer.is_valid()
@@ -79,12 +80,12 @@ class SmallerCNN(nn.Module):
         self.fc1_input_size = conv2_pooled_shape.prod() * conv2_layer['out_channels']
 
         self.fc1 = nn.Sequential(
-            nn.Linear(self.fc1_input_size, 300, bias=False),
-            nn.BatchNorm1d(300),
+            nn.Linear(self.fc1_input_size, 256, bias=False),
+            nn.BatchNorm1d(256),
             nn.ReLU(inplace=True)
         )
         self.fc2 = nn.Sequential(
-            nn.Linear(300, 10),
+            nn.Linear(256, 10),
         )
 
     def forward(self, x):

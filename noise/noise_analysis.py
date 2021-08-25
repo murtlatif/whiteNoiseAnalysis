@@ -2,8 +2,7 @@ import torch
 import random
 import numpy as np
 
-
-from utils.shape_calculator import shape_to_tuple
+from utils.cuda import has_cuda
 from train import model_runner
 
 
@@ -75,7 +74,7 @@ def get_classification_images(model, num_batches, batch_size, img_shape, classes
 
         output_indices, _ = model_runner.predict_batch(model, batch_noise)
 
-        print('\rWhite Noise Batch {}/{} [{}/{} ({}%)]'.format(
+        print('\rWhite Noise Batch {}/{} [{}/{} ({:3.0f}%)]'.format(
             batch_idx + 1,
             num_batches,
             (batch_idx + 1) * batch_size,
@@ -128,17 +127,44 @@ def classify_using_average_noise_map(average_noise_maps, data):
     return output_indices
 
 
-def get_kernel_activations(model, data):
+def get_kernel_activations(model, test_loader):
 
     model.eval()
 
-    _, outputs = model_runner.predict_batch(model, data)
+    kernel_activations = {}
 
-    kernel_activations = []
-    for output_idx in range(1, len(outputs)):
-        output = outputs[output_idx]
-        kernel_activation = output.squeeze(1).float().mean(0)
-        print(output.shape, kernel_activation.shape)
-        kernel_activations.append(kernel_activation)
+    for batch_idx, (data, target) in enumerate(test_loader):
+        if has_cuda():
+            data, target = data.cuda(), target.cuda()
+
+        outputs = model(data)
+        convolution_outputs = outputs[1:]
+
+        for output_idx in range(len(convolution_outputs)):
+            convolution_output = convolution_outputs[output_idx]
+
+            if output_idx not in kernel_activations:
+                kernel_activations[output_idx] = (convolution_output.shape[0], convolution_output.sum(0))
+                print(f'{output_idx}: {convolution_output.shape}')
+
+            else:
+                num_samples, current_activation = kernel_activations[output_idx]
+                new_samples = num_samples + convolution_output.shape[0]
+                new_activation = current_activation + convolution_output.sum(0)
+
+                kernel_activations[output_idx] = (new_samples, new_activation)
+
+        if batch_idx % 10 == 1 or batch_idx == 0:
+            print('\rSpike Triggered Analysis: Batch {}/{} [{}/{} ({:3.0f}%)]'.format(
+                batch_idx + 1,
+                len(test_loader),
+                (batch_idx + 1) * len(data),
+                len(test_loader.dataset),
+                100 * (batch_idx + 1) / len(test_loader)
+            ), end='' if (batch_idx+1) < len(test_loader) else None)
+
+    for kernel_idx, (num_samples, total_activation) in kernel_activations.items():
+        if (num_samples > 0):
+            kernel_activations[kernel_idx] = (total_activation / num_samples)
 
     return kernel_activations

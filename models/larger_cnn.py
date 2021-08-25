@@ -51,7 +51,13 @@ class SimpleBlock(nn.Module):
 
         self.relu = nn.ReLU(inplace=True)
 
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.stride = stride
         self.downsample = downsample
+
+    def __repr__(self):
+        return f'<{self.__class__.__name__} in_ch={self.in_channels} out_ch={self.out_channels} stride={self.stride} downsample={self.downsample} />'
 
     def forward(self, x):
         identity = x.clone()
@@ -76,7 +82,7 @@ class LargerCNN(nn.Module):
     def __init__(self, block_config: BlockConfig, img_channels, num_classes):
         super().__init__()
 
-        print(f'Initialized Larger CNN with config: {block_config}')
+        print(f'Initializing Larger CNN with config: {block_config}')
         assert block_config.is_valid()
 
         self.in_channels = block_config['channels'][0]
@@ -127,7 +133,7 @@ class LargerCNN(nn.Module):
         x_l3 = self.layer3(x_l2)
         x_l4 = self.layer4(x_l3)
 
-        x = self.avgpool(x)
+        x = self.avgpool(x_l4)
         x_flat = x.view(x.shape[0], -1)
         x = self.fc(x_flat)
 

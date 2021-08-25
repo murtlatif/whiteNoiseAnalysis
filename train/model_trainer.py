@@ -56,7 +56,7 @@ class ModelTrainer():
                 epoch_num_train_correct_predictions += num_correct_predictions
                 epoch_num_train_total_predictions += num_predictions
 
-                if log_frequency > 0 and batch_idx % log_frequency == 1:
+                if log_frequency > 0 and (batch_idx % log_frequency == 1 or batch_idx == 0):
                     print('\rTrain Epoch: {}/{} [{:5}/{} ({:3.0f}%)]\tLoss: {:.6f}\t Train Accuracy: {}/{} ({:3.4f}%)'.format(
                         epoch + 1,
                         epochs,
@@ -109,23 +109,29 @@ class ModelTrainer():
 
     @staticmethod
     def validate(model, test_loader):
-        test_data = test_loader.dataset.data.float()
-        test_data = test_data[:, None, ...]  # Expand dimension of data
-        test_targets = test_loader.dataset.targets
-
         model.eval()
 
-        output = model(test_data)[0]
-        _, output_indices = output.max(1)
+        all_outputs = np.array([])
+        all_labels = np.array([])
 
-        accuracy, num_correct_predictions, num_predictions = ModelTrainer.get_accuracy(output_indices, test_targets)
+        for _, (data, target) in enumerate(test_loader):
+            if has_cuda():
+                data, target = data.cuda(), target.cuda()
+
+            output = model(data)[0]
+            _, output_indices = output.max(1)
+
+            all_outputs = np.append(all_outputs, output_indices)
+            all_labels = np.append(all_labels, target)
+
+        accuracy, num_correct_predictions, num_predictions = ModelTrainer.get_accuracy(all_outputs, all_labels)
         return accuracy, num_correct_predictions, num_predictions
 
     @staticmethod
     def get_accuracy(outputs, labels):
-        equalities = torch.eq(outputs, labels).cpu()
+        equalities = np.equal(outputs, labels)
 
-        num_predictions = equalities.size()[0]
+        num_predictions = equalities.shape[0]
         num_correct_predictions = equalities.sum().item()
         accuracy = num_correct_predictions/num_predictions
 
