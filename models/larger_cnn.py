@@ -122,13 +122,13 @@ class LargerCNN(nn.Module):
         x = self.bn1(x)
         x = self.relu(x)
 
-        x = self.layer1(x)
-        x = self.layer2(x)
-        x = self.layer3(x)
-        x = self.layer4(x)
+        x_l1 = self.layer1(x)
+        x_l2 = self.layer2(x_l1)
+        x_l3 = self.layer3(x_l2)
+        x_l4 = self.layer4(x_l3)
 
         x = self.avgpool(x)
         x_flat = x.view(x.shape[0], -1)
         x = self.fc(x_flat)
 
-        return x
+        return x, x_l4, x_l3, x_l2, x_l1

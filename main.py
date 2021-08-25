@@ -117,6 +117,14 @@ def classification_analysis(test_loader, model, args):
     plotter.plot_confusion_matrix(targets, output_indices)
 
 
+def spike_triggered_analysis(test_loader, model):
+    data, targets = test_loader.dataset.data, test_loader.dataset.targets
+
+    kernel_activations = noise_analysis.get_kernel_activations(model, data.float())
+    plotter.plot_kernel_activations(kernel_activations[0].detach().numpy(), 8, 8)
+    plotter.plot_kernel_activations(kernel_activations[1].detach().numpy(), 4, 8)
+
+
 def main():
     args = get_args()
 
@@ -129,7 +137,8 @@ def main():
     if args.train:
         train_model(train_loader, test_loader, model, optimizer, epoch, args)
 
-    classification_analysis(test_loader, model, args)
+    # classification_analysis(test_loader, model, args)
+    spike_triggered_analysis(test_loader, model)
 
     if args.summary:
         show_model_summary_mnist(model)

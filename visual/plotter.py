@@ -29,11 +29,12 @@ def plot_training_results(loss_data, train_data, test_data):
     plt.show()
 
 
-def plot_class_images(class_data: dict, height: int, width: int):
+def plot_class_images(class_data: dict, plot_rows: int, plot_columns: int):
     plot_idx = 0
+
     for target_class, class_image in class_data.items():
         plot_idx += 1
-        ax = plt.subplot(height, width, plot_idx)
+        ax = plt.subplot(plot_rows, plot_columns, plot_idx)
         plt.axis('off')
         ax.set_title(target_class)
         plt.imshow(class_image)
@@ -41,11 +42,12 @@ def plot_class_images(class_data: dict, height: int, width: int):
     plt.show()
 
 
-def plot_class_images_with_quantity(class_data, height, width):
+def plot_class_images_with_quantity(class_data, plot_rows, plot_columns):
     plot_idx = 0
+
     for target_class, (class_qty, class_image) in class_data.items():
         plot_idx += 1
-        ax = plt.subplot(height, width, plot_idx)
+        ax = plt.subplot(plot_rows, plot_columns, plot_idx)
         plt.axis('off')
         ax.set_title(f'{target_class} [{class_qty}]')
         plt.imshow(class_image)
@@ -53,14 +55,27 @@ def plot_class_images_with_quantity(class_data, height, width):
     plt.show()
 
 
-def plot_class_images_with_quantity_and_classification(class_data, classifications, height, width):
+def plot_class_images_with_quantity_and_classification(class_data, classifications, plot_rows, plot_columns):
     plot_idx = 0
+
     for target_class, (class_qty, class_image) in class_data.items():
         plot_idx += 1
-        ax = plt.subplot(height, width, plot_idx)
+        ax = plt.subplot(plot_rows, plot_columns, plot_idx)
         plt.axis('off')
         ax.set_title(f'{target_class} - {classifications[target_class]} [{class_qty}]')
         plt.imshow(class_image)
+
+    plt.show()
+
+
+def plot_kernel_activations(kernel_activations, plot_rows, plot_columns):
+    plot_idx = 0
+
+    for kernel in kernel_activations:
+        plot_idx += 1
+        plt.subplot(plot_rows, plot_columns, plot_idx)
+        plt.axis('off')
+        plt.imshow(kernel)
 
     plt.show()
 

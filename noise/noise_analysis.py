@@ -112,7 +112,7 @@ def classify_classification_images(model, classification_data):
     class_data = {}
 
     for target_class, (num_samples, classification_image) in classification_data.items():
-        output_class, outputs = model_runner.predict_one(model, classification_image)
+        output_class, _ = model_runner.predict_one(model, classification_image)
         class_data[target_class] = output_class.item()
 
     return class_data
@@ -126,3 +126,19 @@ def classify_using_average_noise_map(average_noise_maps, data):
     output_indices = np.argmax(outputs, 1)
 
     return output_indices
+
+
+def get_kernel_activations(model, data):
+
+    model.eval()
+
+    _, outputs = model_runner.predict_batch(model, data)
+
+    kernel_activations = []
+    for output_idx in range(1, len(outputs)):
+        output = outputs[output_idx]
+        kernel_activation = output.squeeze(1).float().mean(0)
+        print(output.shape, kernel_activation.shape)
+        kernel_activations.append(kernel_activation)
+
+    return kernel_activations

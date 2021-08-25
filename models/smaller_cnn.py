@@ -96,4 +96,4 @@ class SmallerCNN(nn.Module):
         x_fc1 = self.fc1(x)
         x_fc2 = self.fc2(x_fc1)
 
-        return x_fc2
+        return x_fc2, x_conv2, x_conv1

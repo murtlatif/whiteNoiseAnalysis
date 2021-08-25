@@ -2,7 +2,7 @@ def predict(model, input_data):
     model.eval()
 
     outputs = model(input_data)
-    _, output_indices = outputs.max(1)
+    _, output_indices = outputs[0].max(1)
 
     return output_indices, outputs
 

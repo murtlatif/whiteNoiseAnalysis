@@ -40,7 +40,7 @@ class ModelTrainer():
 
                 optimizer.zero_grad()
 
-                predicted = model(data)
+                predicted = model(data)[0]
 
                 loss = loss_fnc(predicted, target)
                 epoch_losses.append(loss.item())
@@ -115,7 +115,7 @@ class ModelTrainer():
 
         model.eval()
 
-        output = model(test_data)
+        output = model(test_data)[0]
         _, output_indices = output.max(1)
 
         accuracy, num_correct_predictions, num_predictions = ModelTrainer.get_accuracy(output_indices, test_targets)

@@ -22,6 +22,7 @@ def get_args():
     parser.add_argument('-b', '--batch-size', type=int, default=32, help='Batch size for training')
     parser.add_argument('-B', '--test-batch-size', type=int, default=32, help='Batch size for training')
     parser.add_argument('-f', '--log-frequency', type=int, default=50, help='Frequency of training logs')
+    parser.add_argument('-F', '--fashion', action='store_true', help='Use the Fashion MNIST dataset')
 
     args = parser.parse_args()
     return args

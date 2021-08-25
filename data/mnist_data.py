@@ -2,13 +2,19 @@ import torch.utils.data
 from torchvision import datasets, transforms
 
 
-def fetch_mnist(batch_size: int, test_batch_size: int, use_cuda: bool):
+def fetch_mnist(batch_size: int, test_batch_size: int, use_cuda: bool, fashion: bool = False):
     mnist_transform = transforms.Compose([
         transforms.ToTensor()
     ])
 
-    mnist_train_data = datasets.MNIST('./data/mnistDataFiles', train=True, transform=mnist_transform, download=True)
-    mnist_test_data = datasets.MNIST('./data/mnistDataFiles', train=False, transform=mnist_transform, download=True)
+    if fashion:
+        mnist_train_data = datasets.FashionMNIST(
+            './data/mnistDataFiles', train=True, transform=mnist_transform, download=True)
+        mnist_test_data = datasets.FashionMNIST(
+            './data/mnistDataFiles', train=False, transform=mnist_transform, download=True)
+    else:
+        mnist_train_data = datasets.MNIST('./data/mnistDataFiles', train=True, transform=mnist_transform, download=True)
+        mnist_test_data = datasets.MNIST('./data/mnistDataFiles', train=False, transform=mnist_transform, download=True)
 
     train_kwargs = {
         'batch_size': batch_size,
