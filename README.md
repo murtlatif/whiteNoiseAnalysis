@@ -15,6 +15,13 @@
     -   [Larger CNN](#classification-larger-cnn)
         -   [MNIST](#classification-larger-cnn-mnist)
         -   [Fashion-MNIST](#classification-larger-cnn-fashion)
+-   [Spike Triggered Analysis](#spike-triggered-analysis)
+    -   [Smaller CNN](#spike-smaller-cnn)
+        -   [MNIST](#spike-smaller-cnn-mnist)
+        -   [Fashion-MNIST](#spike-smaller-cnn-fashion)
+    -   [Larger CNN](#spike-larger-cnn)
+        -   [MNIST](#spike-larger-cnn-mnist)
+        -   [Fashion-MNIST](#spike-larger-cnn-fashion)
 
 ---
 
@@ -177,7 +184,7 @@ Conv1 Layer (32x26x26)
 Conv2 Layer (64x11x11)
 ![Smaller Fashion STA Conv2](assets/smaller-cnn-fashion-sta-conv2.png)
 
-<a id="spike-smaller-cnn"></a>
+<a id="spike-larger-cnn"></a>
 
 ### Larger CNN
 
