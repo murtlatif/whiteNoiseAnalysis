@@ -114,7 +114,7 @@ Sample stimulus for both the MNIST and Fashion-MNIST are shown in the images bel
 
 ![Fashion-MNIST Sample Stimulus](assets/fashion-sample-stimulus.png)
 
-The classification image data is shown below for each of the models.
+The classification image data is shown below for each of the models, with the titles representing the ground truth followed by the predicted class. Inside the square brackets lists the quantity of samples that were classified as that class .
 
 <a id="classification-smaller-cnn"></a>
 
@@ -169,9 +169,11 @@ Spike triggered analysis of a kernel's receptive field is currently a WIP.
 #### MNIST
 
 Conv1 Layer (32x26x26)
+
 ![Smaller MNIST STA Conv1](assets/smaller-cnn-mnist-sta-conv1.png)
 
 Conv2 Layer (64x11x11)
+
 ![Smaller MNIST STA Conv2](assets/smaller-cnn-mnist-sta-conv2.png)
 
 <a id="spike-smaller-cnn-fashion"></a>
@@ -179,9 +181,11 @@ Conv2 Layer (64x11x11)
 #### Fashion-MNIST
 
 Conv1 Layer (32x26x26)
+
 ![Smaller Fashion STA Conv1](assets/smaller-cnn-fashion-sta-conv1.png)
 
 Conv2 Layer (64x11x11)
+
 ![Smaller Fashion STA Conv2](assets/smaller-cnn-fashion-sta-conv2.png)
 
 <a id="spike-larger-cnn"></a>
@@ -193,15 +197,19 @@ Conv2 Layer (64x11x11)
 #### MNIST
 
 Layer 1 (16x14x14)
+
 ![Larger MNIST STA Layer1](assets/larger-cnn-mnist-sta-l1.png)
 
 Layer 2 (32x14x14)
+
 ![Larger MNIST STA Layer2](assets/larger-cnn-mnist-sta-l2.png)
 
 Layer 3 (64x7x7)
+
 ![Larger MNIST STA Layer3](assets/larger-cnn-mnist-sta-l3.png)
 
 Layer 4 (128x7x7)
+
 ![Larger MNIST STA Layer4](assets/larger-cnn-mnist-sta-l4.png)
 
 <a id="spike-larger-cnn-fashion"></a>
@@ -209,13 +217,17 @@ Layer 4 (128x7x7)
 #### Fashion-MNIST
 
 Layer 1 (16x14x14)
+
 ![Larger Fashion STA Layer1](assets/larger-cnn-fashion-sta-l1.png)
 
 Layer 2 (32x14x14)
+
 ![Larger Fashion STA Layer2](assets/larger-cnn-fashion-sta-l2.png)
 
 Layer 3 (64x7x7)
+
 ![Larger Fashion STA Layer3](assets/larger-cnn-fashion-sta-l3.png)
 
 Layer 4 (128x7x7)
+
 ![Larger Fashion STA Layer4](assets/larger-cnn-fashion-sta-l4.png)
